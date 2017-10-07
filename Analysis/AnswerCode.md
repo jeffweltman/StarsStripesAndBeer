@@ -18,10 +18,6 @@ colSums(is.na(BrewsAndBreweries),na.rm=FALSE)
 
 BreweryCount <- sqldf("select count(distinct(Brewery_id)) as BreweryCount, State from BrewsAndBreweries group by State")
 
-OR
-
-##### ans = as.data.table(BrewsAndBreweries)[, count := uniqueN(Brewery_id), by = State] will add to a table, but meh
-
 BreweryCount <- BreweryCount[-1,]
 ##### removed the NAs
 
