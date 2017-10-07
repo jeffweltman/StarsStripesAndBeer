@@ -23,7 +23,7 @@ OR
 ##### ans = as.data.table(BrewsAndBreweries)[, count := uniqueN(Brewery_id), by = State] will add to a table, but meh
 
 BreweryCount <- BreweryCount[-1,]
-# removed the NAs
+##### removed the NAs
 
 head(BrewsAndBreweries,6)
 tail(BrewsAndBreweries,6)
