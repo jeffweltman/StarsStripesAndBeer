@@ -21,16 +21,37 @@ DFBeers <- repmis::source_data(Beers)
 Breweries <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Breweries.csv"
 DFBreweries <- repmis::source_data(Breweries)
 
-# Cleaning data for merging: Rename variable names
+# Cleaning data for merging: Rename variable names to aid in merging
+# and if there are N/A values in the ABV or IBU we'll remove those observations.
 #-------------------------------------------------#
 
 colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ounces")
 colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 
+colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA
+DFBeers <- subset(DFBeers, !is.na(IBU)) # Remove them
+colSums(is.na(DFBeers))                 # DFBeers has no observations with IBU of NA
+                                        # (There were, but were removed with the above.)
+colSums(is.na(DFBreweries))             # DFBreweries has no NA
+
+# Check for outliers
+#-------------------#
+summary(DFBeers)
+sd(DFBeers$ABV)    # 0.0126
+sd(DFBeers$IBU)    # 25.954
+# NO outliers detected in this set of observations.
+# Note: IBU values have a wide range. Reference:
+# https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/
+
+
 # Merge data sets
 #----------------#
 
 BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
+
+# Any NA's from merged (breweries with beers with no ABV or IBU rating)?
+colSums(is.na(BrewsAndBreweries))
+BrewsAndBreweries <- subset(BrewsAndBreweries, !is.na(IBU)) # Remove them
 
 # Print the first and last 6 observations to check the merged file.
 #------------------------------------------------------------------#
@@ -41,7 +62,7 @@ tail(BrewsAndBreweries, 6)        # Looks okay
 # Report the number of NA's in each column.
 #------------------------------------------#
 
-colSums(is.na(BrewsAndBreweries),na.rm=FALSE)    # 62 in "ABV; 1,005 in "IBU"
+colSums(is.na(BrewsAndBreweries))    # 0
 
 # Compute the median alcohol content (ABV) and international
 # bitterness unit (IBU) for each state.
@@ -53,18 +74,12 @@ IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 
 # Plot a bar chart to compare.
 #-----------------------------#
-# Merge ABV_ByStte and IBU_ByState, (and sort it by state (?or other?)
 
-# AbvIbu <- merge(x=ABV_ByState, y=IBU_ByState, by="State", all=TRUE)
-# AbvIbu <- AbvIbu[order(AbvIbu$State), ]  
+# barplot - (How to compare ABV and IBU in one Barchart? 
+#            What does the end product look like? )
 
-# barplot - (not sure what is measured in one bar? IBU or ABV? How can we
-# compare? Compare what? How to compare ABV and IBU in one Barchart? 
-# What does the end product look like? )
-
-# Okay, let's write BrewsAndBreweries merged file and create an
-# r sript to analyze through different plotting techniques.
-# 
+# !!!!! Okay, let's write BrewsAndBreweries merged file and create an
+# r sript to analyze through some other plotting techniques.
 
 write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)     
 
@@ -76,7 +91,7 @@ MaxABV <- aggregate(ABV ~ State,
                     data=BrewsAndBreweries, 
                     max)
 MaxABV <- MaxABV[order(-MaxABV$ABV),]
-print(MaxABV[1, "State"])            # Colorado
+print(MaxABV[1, "State"])            # Kentucky
 
 # Determine which state has the most bitter (IBU) beer.
 #-----------------------------------------------------#
