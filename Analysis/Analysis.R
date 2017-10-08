@@ -74,14 +74,34 @@ IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 
 # Plot a bar chart to compare.
 #-----------------------------#
+#    (How do we compare ABV and IBU in a Barchart? 
+#     What does the end product look like? )
 
-# barplot - (How to compare ABV and IBU in one Barchart? 
-#            What does the end product look like? )
 
-# !!!!! Okay, let's write BrewsAndBreweries merged file and create an
-# r sript to analyze through some other plotting techniques.
+# Add a factor column on the ABV:
+# Number | Label      | Value of ABV
+# -----------------------------------
+# 1      | low        | min-050
+# 2      | med low    | 0.050-0.059
+# 3      | med high   | 0.060-0.069
+# 4      | high       | 0.07-max
 
-write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)     
+
+BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV < 0.05 ] <- 1
+BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV
+                         >= 0.05 &
+                         BrewsAndBreweries$ABV < 0.06 ] <- 2
+BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV
+                         >= 0.06 &
+                         BrewsAndBreweries$ABV < 0.07 ] <- 3
+BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV > 0.07 ] <- 4
+
+# Create a vector of factor level labels, and convert labels to a factor.
+#-----------------------------------------------------------------------#
+ABVlabels <- c("low", "med low", "med high", "high")
+BrewsAndBreweries$ABVlvl <- factor(BrewsAndBreweries$ABVlvl, labels = ABVlabels)
+
+   
 
 # Determine which state has the beer
 # with the highest alcohol content (ABV).
@@ -106,5 +126,10 @@ print(MaxIBU[1, "State"])            # Oregon
 #---------------------------------------------------#
 
 print(summary(BrewsAndBreweries$ABV))
+
+
+# Write the merged data set to a cvs file:
+#-----------------------------------------#
+write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)  
 
 
