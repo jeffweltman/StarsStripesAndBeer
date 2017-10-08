@@ -1,5 +1,5 @@
 ######################################################################
-#  Weltman & Woodruff Analytics Co.                                  #
+#  Weltman & Woodruff Analytics Co.                 October 8, 2017  #
 #  Authors: Claudia Woodruff, President ad Founder                   #
 #           Jeff Weltmam, CTO and Chief Data Scientist               #
 #                                                                    #
@@ -55,15 +55,18 @@ IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 #-----------------------------#
 # Merge ABV_ByStte and IBU_ByState, (and sort it by state (?or other?)
 
-AbvIbu <- merge(x=ABV_ByState, y=IBU_ByState, by="State", all=TRUE)
-AbvIbu <- AbvIbu[order(AbvIbu$State), ]  
+# AbvIbu <- merge(x=ABV_ByState, y=IBU_ByState, by="State", all=TRUE)
+# AbvIbu <- AbvIbu[order(AbvIbu$State), ]  
 
 # barplot - (not sure what is measured in one bar? IBU or ABV? How can we
 # compare? Compare what? How to compare ABV and IBU in one Barchart? 
 # What does the end product look like? )
 
-# TODO 
-            
+# Okay, let's write BrewsAndBreweries merged file and create an
+# r sript to analyze through different plotting techniques.
+# 
+
+write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)     
 
 # Determine which state has the beer
 # with the highest alcohol content (ABV).
@@ -88,8 +91,5 @@ print(MaxIBU[1, "State"])            # Oregon
 #---------------------------------------------------#
 
 print(summary(BrewsAndBreweries$ABV))
-
-
-
 
 
