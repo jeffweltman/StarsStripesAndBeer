@@ -9,8 +9,10 @@
 #               the Craft Beer market in the United States           #
 #               to help SS&B to make the most profitable decisions   #
 #               and gain more market share of the craft beer segment.#
+#                                                                    #
+#  Analysis.r - Analyzing data to answer reearch questions           #
+#                                                                    #
 ######################################################################
-
 
 # Read raw data sets
 #-------------------#
