@@ -94,6 +94,8 @@ MaxABV <- aggregate(ABV ~ State,
                     max)
 MaxABV <- MaxABV[order(-MaxABV$ABV),]
 print(MaxABV[1, "State"])            # Kentucky
+paste("With an ABV of ", (MaxABV[1, "ABV"]),", ", (MaxABV[1, "State"]), " has the beer with highest alcohol content: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$ABV==MaxABV[1, "ABV"])],".", sep="")
+# what do you think of outputting that string instead to give more information? 
 
 # Determine which state has the most bitter (IBU) beer.
 #-----------------------------------------------------#
@@ -103,6 +105,8 @@ MaxIBU <- aggregate(IBU ~ State,
                     max)
 MaxIBU <- MaxIBU[order(-MaxIBU$IBU), ]
 print(MaxIBU[1, "State"])            # Oregon
+paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has the beer with highest bitterness: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$IBU==MaxIBU[1, "IBU"])],".", sep="")
+# likewise, let me know what you think of this string instead.
 
 # Print a summary of statistics for the ABV variable.
 #---------------------------------------------------#
