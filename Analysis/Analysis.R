@@ -5,10 +5,10 @@
 #                                                                    #
 #  Purpose: Analysis for Stars Stripes and Beer Co.                  #
 #                                                                    #
-#  Description: W&W Analyitcs has been commissioned to analyze       #
-#               the Craft Beer market in the United States in        #
+#  Description: W&W Analytics has been commissioned to analyze       #
+#               the Craft Beer market in the United States           #
 #               to help SS&B to make the most profitable decisions   #
-#               to gain more market share of the craft beer segment. #
+#               and gain more market share of the craft beer segment.#
 ######################################################################
 
 
@@ -29,6 +29,8 @@ colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ou
 colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 
 colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA
+BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU) 
+# Since all beers from South Dakota were missing IBU data, the line above sets their IBU to 0. Otherwise all their beers are deleted by the following step.
 DFBeers <- subset(DFBeers, !is.na(IBU)) # Remove them
 colSums(is.na(DFBeers))                 # DFBeers has no observations with IBU of NA
                                         # (There were, but were removed with the above.)
