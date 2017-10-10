@@ -5,12 +5,14 @@
 #                                                                    #
 #  Purpose: Analysis for Stars Stripes and Beer Co.                  #
 #                                                                    #
-#  Description: W&W Analyitcs has been commissioned to analyze       #
-#               the Craft Beer market in the United States in        #
+#  Description: W&W Analytics has been commissioned to analyze       #
+#               the Craft Beer market in the United States           #
 #               to help SS&B to make the most profitable decisions   #
-#               to gain more market share of the craft beer segment. #
+#               and gain more market share of the craft beer segment.#
+#                                                                    #
+#  Analysis.r - Analyzing data to answer reearch questions           #
+#                                                                    #
 ######################################################################
-
 
 # Read raw data sets
 #-------------------#
@@ -29,6 +31,8 @@ colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ou
 colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 
 colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA
+BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU) 
+# Since all beers from South Dakota were missing IBU data, the line above sets their IBU to 0. Otherwise all their beers are deleted by the following step.
 DFBeers <- subset(DFBeers, !is.na(IBU)) # Remove them
 colSums(is.na(DFBeers))                 # DFBeers has no observations with IBU of NA
                                         # (There were, but were removed with the above.)
@@ -43,6 +47,11 @@ sd(DFBeers$IBU)    # 25.954
 # Note: IBU values have a wide range. Reference:
 # https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/
 
+
+# Write tidy data sets
+#----------------#
+write.csv(DFBeers,"TidyBeers.csv",row.names=FALSE)
+write.csv(DFBreweries,"TidyBreweries.csv",row.names=FALSE)
 
 # Merge data sets
 #----------------#
@@ -112,6 +121,8 @@ MaxABV <- aggregate(ABV ~ State,
                     max)
 MaxABV <- MaxABV[order(-MaxABV$ABV),]
 print(MaxABV[1, "State"])            # Kentucky
+paste("With an ABV of ", (MaxABV[1, "ABV"]),", ", (MaxABV[1, "State"]), " has the beer with highest alcohol content: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$ABV==MaxABV[1, "ABV"])],".", sep="")
+# what do you think of outputting that string instead to give more information? 
 
 # Determine which state has the most bitter (IBU) beer.
 #-----------------------------------------------------#
@@ -121,6 +132,8 @@ MaxIBU <- aggregate(IBU ~ State,
                     max)
 MaxIBU <- MaxIBU[order(-MaxIBU$IBU), ]
 print(MaxIBU[1, "State"])            # Oregon
+paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has the beer with highest bitterness: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$IBU==MaxIBU[1, "IBU"])],".", sep="")
+# likewise, let me know what you think of this string instead.
 
 # Print a summary of statistics for the ABV variable.
 #---------------------------------------------------#
