@@ -46,6 +46,11 @@ sd(DFBeers$IBU)    # 25.954
 # https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/
 
 
+# Write tidy data sets
+#----------------#
+write.csv(DFBeers,"TidyBeers.csv",row.names=FALSE)
+write.csv(DFBreweries,"TidyBreweries.csv",row.names=FALSE)
+
 # Merge data sets
 #----------------#
 
