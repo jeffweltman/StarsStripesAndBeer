@@ -30,10 +30,8 @@ DFBreweries <- repmis::source_data(Breweries)
 colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ounces")
 colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 
-colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA
-BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU) 
-# Since all beers from South Dakota were missing IBU data, the line above sets their IBU to 0. Otherwise all their beers are deleted by the following step.
-DFBeers <- subset(DFBeers, !is.na(IBU)) # Remove them
+colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA but will be removed after merge
+
 colSums(is.na(DFBeers))                 # DFBeers has no observations with IBU of NA
                                         # (There were, but were removed with the above.)
 colSums(is.na(DFBreweries))             # DFBreweries has no NA
@@ -57,6 +55,10 @@ write.csv(DFBreweries,"TidyBreweries.csv",row.names=FALSE)
 #----------------#
 
 BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
+
+# Since all beers from South Dakota were missing IBU data, the line below sets their IBU to 0. Otherwise all their beers are deleted by the following step.
+
+BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU) 
 
 # Any NA's from merged (breweries with beers with no ABV or IBU rating)?
 colSums(is.na(BrewsAndBreweries))
