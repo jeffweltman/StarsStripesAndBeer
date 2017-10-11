@@ -33,7 +33,7 @@ colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA but will be removed after merge
 
 colSums(is.na(DFBeers))                 # DFBeers has no observations with IBU of NA
-                                        # (There were, but were removed with the above.)
+# (There were, but were removed with the above.)
 colSums(is.na(DFBreweries))             # DFBreweries has no NA
 
 # Check for outliers
@@ -101,10 +101,10 @@ IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV < 0.05 ] <- 1
 BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV
                          >= 0.05 &
-                         BrewsAndBreweries$ABV < 0.06 ] <- 2
+                           BrewsAndBreweries$ABV < 0.06 ] <- 2
 BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV
                          >= 0.06 &
-                         BrewsAndBreweries$ABV < 0.07 ] <- 3
+                           BrewsAndBreweries$ABV < 0.07 ] <- 3
 BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV >= 0.07 ] <- 4
 
 # Create a vector of factor level labels, and convert labels to a factor.
@@ -112,7 +112,7 @@ BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV >= 0.07 ] <- 4
 ABVlabels <- c("low", "med low", "med high", "high")
 BrewsAndBreweries$ABVlvl <- factor(BrewsAndBreweries$ABVlvl, labels = ABVlabels)
 
-   
+
 
 # Determine which state has the beer
 # with the highest alcohol content (ABV).
@@ -146,5 +146,3 @@ print(summary(BrewsAndBreweries$ABV))
 # Write the merged data set to a cvs file:
 #-----------------------------------------#
 write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)  
-
-
