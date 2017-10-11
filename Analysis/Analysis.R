@@ -88,6 +88,49 @@ IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 #    (How do we compare ABV and IBU in a Barchart? 
 #     What does the end product look like? )
 
+# First, we merge the median ABV and median IBU data with the state data to get a "wide" table
+
+library(reshape2)
+BeerFacts <- merge(x=ABV_ByState,y=IBU_ByState,by="State")
+
+# For easier side-by-side comparison, we multiply ABV by 807 to approximate the same range of values
+
+BeerFacts$ABV <- BeerFacts$ABV * 807
+
+# Then we melt these facts to get a long table with ABV and IBU as variables, and their values in the Value column
+
+BeerFacts.long <- melt(BeerFacts)
+BeerFacts.long <- BeerFacts.long[order(BeerFacts.long$State),]
+
+# The following plot shows side-by-side median IBU and ABV data per state
+
+library(ggplot2)
+ggplot(BeerFacts.long,aes(x=State,y=value,fill=factor(variable)))+
+  geom_bar(stat="identity",position="dodge", width=0.8)+
+  scale_fill_discrete(name="Measurement",
+                      breaks=c(0,1),
+                      labels=c("ABV","IBU"))+
+  xlab("State")+ylab("Level")+
+  ggtitle("Median ABV and Median IBU Per State")+
+  coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
+
+# This bar plot shows median ABV data per state
+
+ggplot(ABV_ByState,aes(State,ABV))+
+  geom_col(fill="#45415E")+
+  coord_cartesian(ylim=c(0.03,0.075))+
+  ggtitle("Median ABV Per State")+
+  coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
+
+# This bar plot shows median IBU data per state (South Dakota == 0)
+
+ggplot(IBU_ByState,aes(State,IBU))+
+  geom_col(fill="#91B3BC")+
+  coord_cartesian(ylim=c(0,63))+
+  ggtitle("Median IBU Per State")+
+  coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
+
+# ---I like your factor idea, but not sure if we need it considering the above plots. JW--- #
 
 # Add a factor column on the ABV:
 # Number | Label      | Value of ABV
@@ -122,9 +165,10 @@ MaxABV <- aggregate(ABV ~ State,
                     data=BrewsAndBreweries, 
                     max)
 MaxABV <- MaxABV[order(-MaxABV$ABV),]
-print(MaxABV[1, "State"])            # Kentucky
 paste("With an ABV of ", (MaxABV[1, "ABV"]),", ", (MaxABV[1, "State"]), " has the beer with highest alcohol content: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$ABV==MaxABV[1, "ABV"])],".", sep="")
-# what do you think of outputting that string instead to give more information? 
+
+
+
 
 # Determine which state has the most bitter (IBU) beer.
 #-----------------------------------------------------#
@@ -133,9 +177,7 @@ MaxIBU <- aggregate(IBU ~ State,
                     data=BrewsAndBreweries, 
                     max)
 MaxIBU <- MaxIBU[order(-MaxIBU$IBU), ]
-print(MaxIBU[1, "State"])            # Oregon
 paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has the beer with highest bitterness: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$IBU==MaxIBU[1, "IBU"])],".", sep="")
-# likewise, let me know what you think of this string instead.
 
 # Print a summary of statistics for the ABV variable.
 #---------------------------------------------------#
@@ -143,6 +185,6 @@ paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has th
 print(summary(BrewsAndBreweries$ABV))
 
 
-# Write the merged data set to a cvs file:
+# Write the merged data set to a csv file:
 #-----------------------------------------#
 write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)  
