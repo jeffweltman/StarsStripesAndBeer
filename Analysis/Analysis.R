@@ -103,7 +103,7 @@ BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV
 BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV
                          >= 0.06 &
                          BrewsAndBreweries$ABV < 0.07 ] <- 3
-BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV > 0.07 ] <- 4
+BrewsAndBreweries$ABVlvl[BrewsAndBreweries$ABV >= 0.07 ] <- 4
 
 # Create a vector of factor level labels, and convert labels to a factor.
 #-----------------------------------------------------------------------#
