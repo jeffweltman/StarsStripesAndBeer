@@ -105,6 +105,9 @@ BeerFacts.long <- BeerFacts.long[order(BeerFacts.long$State),]
 # The following plot shows side-by-side median IBU and ABV data per state
 
 library(ggplot2)
+theme(plot.title = element_text(hjust = 0.5))
+theme_update(plot.title = element_text(hjust = 0.5))
+
 ggplot(BeerFacts.long,aes(x=State,y=value,fill=factor(variable)))+
   geom_bar(stat="identity",position="dodge", width=0.8)+
   scale_fill_discrete(name="Measurement",
@@ -183,6 +186,26 @@ paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has th
 #---------------------------------------------------#
 
 print(summary(BrewsAndBreweries$ABV))
+
+# Initial scatterplot of IBU and ABV
+
+plot(x=BrewsAndBreweries$ABV, y=BrewsAndBreweries$IBU, xlab = "Alcohol Content (ABV)", ylab = "Bitterness (IBU)", main = "Relationship Between Bitterness and Alcohol Content")
+
+# A positive correlation does appear likely. Let's confirm with a correlation test to get Pearson's R.
+
+cor.test(BrewsAndBreweries$ABV, BrewsAndBreweries$IBU)
+
+# 66.6% of the variation in IBU is explained by a change in ABV.
+
+# Getting the intercept and slope for abline
+reg <- lm(IBU ~ ABV, data=BrewsAndBreweries)
+reg
+
+# Now we can peform a scatterplot in ggplot2 - perhaps it might be more enlightening?
+library(ggplot2)
+ggplot(BrewsAndBreweries, aes(x=ABV, y=IBU))+
+  geom_point(size=2) + geom_abline(intercept=-34.1, slope = 1282.0)+
+  ggtitle("Correlation Between ABV and IBU")
 
 
 # Write the merged data set to a csv file:
