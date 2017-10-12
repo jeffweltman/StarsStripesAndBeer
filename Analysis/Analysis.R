@@ -37,6 +37,7 @@ colSums(is.na(DFBreweries))             # DFBreweries has no NA
 # Check for outliers
 #-------------------#
 summary(DFBeers)
+sumary(DFBreweries)
 sd(DFBeers$ABV)    # 0.0126
 sd(DFBeers$IBU)    # 25.954
 # NO outliers detected in this set of observations.
@@ -50,7 +51,12 @@ BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
 
 # Since all beers from South Dakota were missing IBU data, the line below sets their IBU to 0. Otherwise all their beers are deleted by the following step.
 
-BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU) 
+BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU)
+
+BrewsAndBreweries[which(BrewsAndBreweries$Style==""),]
+
+# Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale have no Style provided. Re-coded as "N/A"
+BrewsAndBreweries$Style <- ifelse(BrewsAndBreweries$Style=="","N/A",BrewsAndBreweries$Style)
 
 # Any NA's from merged (breweries with beers with no ABV or IBU rating)?
 colSums(is.na(BrewsAndBreweries))
