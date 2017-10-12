@@ -1,0 +1,124 @@
+---
+title: "Codebook"
+author: "Jeff Weltman"
+date: "October 12, 2017"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Project Description
+W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafter referred to as *SS&B* - to analyze a sample of the craft beer market in order to answer the following research questions:
+* How many breweries are present in each state?
+* What is the median alcohol content (ABV) for each state? What is the median international bitterness unit (IBU) for each state?
+* Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+* Is there any apparent relationship between the bitterness of the beer and its alcoholic content?
+
+##Study design and data processing
+The study was designed to be a representative sample of craft breweries, both large and small, across all 50 states of the United States of America. The data were consolidated from disparate sources in to these two data files.
+
+### Observational Study
+As this is an observational study, we note that any conclusions drawn from the data can only be inferred as associative within the scope of this sample population. 
+
+This research is therefore not intended to support such conclusions as, for example, a higher ABV *causes* a higher IBU. Instead the findings might indicate that evidence suggests *an association* between ABV and IBU.
+
+###Collection of the raw data
+*SS&B* provided two raw data files: **Beers.csv** and **Breweries.csv**. 
+
+These data were collected from the public domain across a variety of sources, including *ratebeer.com* and the craft breweries' websites and social media. There are many incomplete records, due largely to the dependency on self-reported information; the tidying of the data will be addressed below.
+
+##Creating the tidy datafile
+1. The raw data sets are read in:
+```{r Reading raw data sets, echo=TRUE}
+Beers <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Beers.csv" DFBeers <- repmis::source_data(Beers)
+
+Breweries <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Breweries.csv"
+DFBreweries <- repmis::source_data(Breweries)
+```
+
+2. Column names are re-assigned to aid in merging and improve readability.
+```{r Column names assigned, echo=TRUE}
+colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ounces")
+colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
+```
+
+3. Exploratory Data Analysis to look for NAs and outliers.
+```{r Exploratory data analysis, echo=TRUE}
+colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA 
+colSums(is.na(DFBreweries))             # DFBreweries has no NA
+summary(DFBreweries)
+summary(DFBeers)
+sd(DFBeers$ABV)    # 0.0126
+sd(DFBeers$IBU)    # 25.954
+```
+We learned that all beers from South Dakota are missing IBU data, so we'll recode those after the merge to retain the rest of that data. Otherwise, removing the rows with those NAs would cause us to lose all data for the state - this would negatively impact the scope of the project (to analyze and present beer and brewery data from **all** states).
+
+4. We merge the data set to allow for subsetting and removal of NAs
+```{r Merging data, echo=TRUE}
+BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
+```
+Note that we do leave **all=TRUE** to identify the null values and remove them below.
+
+5. Recoding South Dakota IBU to 0 in order to retain data for that state.
+```{r Recoding South Dakota, echo=TRUE}
+BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU) 
+```
+
+6. Identification and removal of null values.
+```{r Final tidying to remove NA, echo=TRUe}
+colSums(is.na(BrewsAndBreweries))
+BrewsAndBreweries <- subset(BrewsAndBreweries, !is.na(IBU)) # Remove them
+```
+
+7. Writing the tidy datafiles.
+```{r Writing the tidy data sets}
+TidyBeers <- BrewsAndBreweries[,c(2:7)] # subsetting only the original columns
+TidyBreweries <- BrewsAndBreweries[,c(1,8:10)] # subsetting only the original columns
+write.csv(TidyBeers,"TidyBeers.csv",row.names=FALSE)
+write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
+write.csv(BrewsAndBreweries,"BrewsAndBreweries.csv",row.names=FALSE) 
+```
+
+##Description of the variables in the TidyBeers.csv file
+TidyBeers.csv contains 1,412 observations across 6 variables:
+* *BeerName* - The advertised name of the beer. This is a string (class character).
+* *Beer_ID* - The Primary Key (PK) for linking the beers to their breweries. This is an integer which ranges from 1:2692.
+* *ABV* - This is the measurement of the **A**lcohol **B**y **V**olume of each beer, as advertised in compliance with United States law. This identifies what percentage of the beverage is alcoholic. In this dataset, ABV ranges from 0.027 to 0.125. This is a numeric variable.
+* *IBU* - This is the measurement of the **I**nternational **B**itterness **U**nits of each beer. Generally, a beer with a higher IBU will be more bitter than a beer with a lower IBU. In this data set, IBU ranges from 0 to 138. For more information on the methods of measurement, visit http://methods.asbcnet.org/summaries/beer-23.aspx. This is a numeric variable.
+* *Style* - This is a form of classification of beers. 17 of the 90 beers are classified in two different styles, e.g. "Milk / Sweet Stout", and many styles are variations upon one another, e.g. "Belgian Dark Ale" and "Belgian Strong Dark Ale." As mentioned above, there are 1,412 total beers in our tidy data set, categorized in to 90 styles. Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale had no Style provided and were re-coded as "N/A". This is a string (character) variable.
+* *Ounces* - This measures the quantity, in ounces, of each beer in the dataset. It ranges from 8.4 ounces to 32 ounces. This is a numeric variable. See below for a distribution:
+```{r Distribution of ounces, echo=TRUE}
+library(ggplot2)
+ggplot(data=TidyBeers, aes(TidyBeers$Ounces))+geom_histogram(breaks=seq(6,34,by=4),col="red",aes(fill=..count..),alpha=.8)
+```
+
+General description of the file including:
+ - Dimensions of the dataset
+ - Summary of the data
+ - Variables present in the dataset
+
+(you can easily use Rcode for this, just load the dataset and provide the information directly form the tidy data file)
+
+###Variable 1 (repeat this section for all variables in the dataset)
+Short description of what the variable describes.
+
+Some information on the variable including:
+ - Class of the variable
+ - Unique values/levels of the variable
+ - Unit of measurement (if no unit of measurement list this as well)
+ - In case names follow some schema, describe how entries were constructed (for example time-body-gyroscope-z has 4 levels of descriptors. Describe these 4 levels). 
+
+(you can easily use Rcode for this, just load the dataset and provide the information directly form the tidy data file)
+
+####Notes on variable 1:
+If available, some additional notes on the variable not covered elsewehere. If no notes are present leave this section out.
+
+##Sources
+Sources you used if any, otherise leave out.
+
+##Annex
+If you used any code in the codebook that had the echo=FALSE attribute post this here (make sure you set the results parameter to 'hide' as you do not want the results to show again)
