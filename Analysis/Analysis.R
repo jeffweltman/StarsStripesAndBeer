@@ -1,9 +1,9 @@
 ######################################################################
 #  Weltman & Woodruff Analytics Co.                 October 8, 2017  #
-#  Authors: Claudia Woodruff, President ad Founder                   #
+#  Authors: Claudia Woodruff, President and Founder                  #
 #           Jeff Weltmam, CTO and Chief Data Scientist               #
 #                                                                    #
-#  Purpose: Analysis for Stars Stripes and Beer Co.                  #
+#  Purpose: Analysis for Stars, Stripes, and Beer Co.                #
 #                                                                    #
 #  Description: W&W Analytics has been commissioned to analyze       #
 #               the Craft Beer market in the United States           #
@@ -32,8 +32,6 @@ colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 
 colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA but will be removed after merge
 
-colSums(is.na(DFBeers))                 # DFBeers has no observations with IBU of NA
-# (There were, but were removed with the above.)
 colSums(is.na(DFBreweries))             # DFBreweries has no NA
 
 # Check for outliers
@@ -44,12 +42,6 @@ sd(DFBeers$IBU)    # 25.954
 # NO outliers detected in this set of observations.
 # Note: IBU values have a wide range. Reference:
 # https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/
-
-
-# Write tidy data sets
-#----------------#
-write.csv(DFBeers,"TidyBeers.csv",row.names=FALSE)
-write.csv(DFBreweries,"TidyBreweries.csv",row.names=FALSE)
 
 # Merge data sets
 #----------------#
@@ -63,6 +55,15 @@ BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBrewerie
 # Any NA's from merged (breweries with beers with no ABV or IBU rating)?
 colSums(is.na(BrewsAndBreweries))
 BrewsAndBreweries <- subset(BrewsAndBreweries, !is.na(IBU)) # Remove them
+
+
+# Create tidy data files #
+#------------------------------------------------------------------#
+TidyBeers <- BrewsAndBreweries[,c(2:7)]
+TidyBreweries <- BrewsAndBreweries[,c(1,8:10)]
+write.csv(TidyBeers,"TidyBeers.csv",row.names=FALSE)
+write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
+
 
 # Print the first and last 6 observations to check the merged file.
 #------------------------------------------------------------------#
