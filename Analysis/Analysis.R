@@ -1,75 +1,9 @@
-######################################################################
-#  Weltman & Woodruff Analytics Co.                 October 8, 2017  #
-#  Authors: Claudia Woodruff, President and Founder                  #
-#           Jeff Weltmam, CTO and Chief Data Scientist               #
-#                                                                    #
-#  Purpose: Analysis for Stars, Stripes, and Beer Co.                #
-#                                                                    #
-#  Description: W&W Analytics has been commissioned to analyze       #
-#               the Craft Beer market in the United States           #
-#               to help SS&B to make the most profitable decisions   #
-#               and gain more market share of the craft beer segment.#
-#                                                                    #
-#  Analysis.r - Analyzing data to answer reearch questions           #
-#                                                                    #
-######################################################################
 
-# Read raw data sets
-#-------------------#
-
-Beers <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Beers.csv" 
-DFBeers <- repmis::source_data(Beers)
-
-Breweries <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Breweries.csv"
-DFBreweries <- repmis::source_data(Breweries)
-
-# Cleaning data for merging: Rename variable names to aid in merging
-# and if there are N/A values in the ABV or IBU we'll remove those observations.
-#-------------------------------------------------#
-
-colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ounces")
-colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
-
-colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA but will be removed after merge
-
-colSums(is.na(DFBreweries))             # DFBreweries has no NA
-
-# Check for outliers
-#-------------------#
-summary(DFBeers)
-sumary(DFBreweries)
-sd(DFBeers$ABV)    # 0.0126
-sd(DFBeers$IBU)    # 25.954
-# NO outliers detected in this set of observations.
-# Note: IBU values have a wide range. Reference:
-# https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/
-
-# Merge data sets
-#----------------#
-
-BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
-
-# Since all beers from South Dakota were missing IBU data, the line below sets their IBU to 0. Otherwise all their beers are deleted by the following step.
-
-BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU)
-
-BrewsAndBreweries[which(BrewsAndBreweries$Style==""),]
-
-# Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale have no Style provided. Re-coded as "N/A"
-BrewsAndBreweries$Style <- ifelse(BrewsAndBreweries$Style=="","N/A",BrewsAndBreweries$Style)
-
-# Any NA's from merged (breweries with beers with no ABV or IBU rating)?
-colSums(is.na(BrewsAndBreweries))
-BrewsAndBreweries <- subset(BrewsAndBreweries, !is.na(IBU)) # Remove them
-
-
-# Create tidy data files #
-#------------------------------------------------------------------#
-TidyBeers <- BrewsAndBreweries[,c(2:7)]
-TidyBreweries <- BrewsAndBreweries[,c(1,8:10)]
 write.csv(TidyBeers,"TidyBeers.csv",row.names=FALSE)
 write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
-
+# Write the merged data set to a csv file:
+#-----------------------------------------#
+write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE) 
 
 # Print the first and last 6 observations to check the merged file.
 #------------------------------------------------------------------#
@@ -213,8 +147,3 @@ library(ggplot2)
 ggplot(BrewsAndBreweries, aes(x=ABV, y=IBU))+
   geom_point(size=2) + geom_abline(intercept=-34.1, slope = 1282.0)+
   ggtitle("Correlation Between ABV and IBU")
-
-
-# Write the merged data set to a csv file:
-#-----------------------------------------#
-write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)  
