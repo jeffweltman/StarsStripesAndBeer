@@ -215,6 +215,3 @@ ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
   geom_abline(intercept=-34.1, slope = 1282.0)+
   ggtitle("Correlation Between ABV and IBU")
 
-#ggplot(BrewsAndBreweries, aes(x=ABV, y=IBU))+
-#  geom_point(size=2) + geom_abline(intercept=-34.1, slope = 1282.0)+
-#  ggtitle("Correlation Between ABV and IBU")
