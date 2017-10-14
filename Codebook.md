@@ -191,18 +191,34 @@ write.csv(BrewsAndBreweries,"BrewsAndBreweries.csv",row.names=FALSE)
 ##Description of the variables in the TidyBeers.csv file
 TidyBeers.csv contains 1,412 observations across 7 variables:
 
-* *BreweryName* - The Foreign Key (FK) for linking the beers to their breweries. This is an integer which ranges from 1:547.
+* *BreweryName* - The Foreign Key (FK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
 * *BeerName* - The advertised name of the beer. This is a string (class character).
-* *Beer_ID* - This is a unique identifier for each beer. *Beer_ID* is an integer which ranges from 1:2692.
+* *Beer_ID* - This is a unique identifier for each beer. *Beer_ID* is an integer which ranges from 1 to 2,692.
 * *ABV* - This is the measurement of the **A**lcohol **B**y **V**olume of each beer, as advertised in compliance with United States law. This identifies what percentage of the beverage is alcoholic. In this dataset, ABV ranges from 0.027 to 0.125. This is a numeric variable.
 * *IBU* - This is the measurement of the **I**nternational **B**itterness **U**nits of each beer. Generally, a beer with a higher IBU will be more bitter than a beer with a lower IBU. In this data set, IBU ranges from 0 to 138. For more information on the methods of measurement, visit http://methods.asbcnet.org/summaries/beer-23.aspx. This is a numeric variable.
 * *Style* - This is a form of classification of beers. 17 of the 90 beers are classified in two different styles, e.g. "Milk / Sweet Stout", and many styles are variations upon one another, e.g. "Belgian Dark Ale" and "Belgian Strong Dark Ale." As mentioned above, there are 1,412 total beers in our tidy data set, categorized in to 90 styles. Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale had no Style provided and were re-coded as "N/A". This is a string (character) variable.
-* *Ounces* - This measures the quantity, in ounces, of each beer in the dataset. It ranges from 8.4 ounces to 32 ounces and is a numeric variable.
+* *Ounces* - This measures the quantity, in fluid ounces, of each beer in the dataset. It ranges from 8.4 ounces to 32 ounces and is a numeric variable.
 
 ##Description of the variables in the TidyBreweries.csv file
 TidyBreweries.csv contains 1,412 observations across 4 variables:
 
-* *Brewery_ID* - The Primary Key (PK) for linking the beers to their breweries. This is an integer which ranges from 1:547.
-* *BreweryName* - This is the name of the brewery. Each brewery name has a unique *Brewery_ID*. Of the 1,412 rows in this dataset, ther are 374 distinct brewery names. This is a string (character class) variable.
-* *City* - This variable contains the name of the city in which the brewery is located. Of the 1,412 rows in this dataset, there are 282 distinct cities. This is a string (character class) variable.
+* *Brewery_ID* - The Primary Key (PK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
+* *BreweryName* - This is the name of the brewery. Each brewery name has a unique *Brewery_ID*. Of the 1,412 rows in this dataset, there are 374 distinct brewery names. This is a string (character class) variable.
+* *City* - This variable contains the name of the city in which the brewery is located. Of the 1,412 rows in this dataset, there are 282 distinctly-named cities. This is a string (character class) variable.
 * *State* - This variable contains the abbreviated name of the state in which the brewery is located, e.g. "OR" for Oregon. This variable has 51 values, as the District of Columbia is included. This is a string (character class) variable.
+
+##Description of BrewsAndBreweries.csv, our merged datafile
+BrewsAndBreweries.scsv contains 1,412 across 10 variables:
+
+* *BreweryName* - The Foreign Key (FK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
+* *BeerName* - The advertised name of the beer. This is a string (class character).
+* *Beer_ID* - This is a unique identifier for each beer. *Beer_ID* is an integer which ranges from 1 to 2,692.
+* *ABV* - This is the measurement of the **A**lcohol **B**y **V**olume of each beer, as advertised in compliance with United States law. This identifies what percentage of the beverage is alcoholic. In this dataset, ABV ranges from 0.027 to 0.125. This is a numeric variable.
+* *IBU* - This is the measurement of the **I**nternational **B**itterness **U**nits of each beer. Generally, a beer with a higher IBU will be more bitter than a beer with a lower IBU. In this data set, IBU ranges from 0 to 138. For more information on the methods of measurement, visit http://methods.asbcnet.org/summaries/beer-23.aspx. This is a numeric variable.
+* *Style* - This is a form of classification of beers. 17 of the 90 beers are classified in two different styles, e.g. "Milk / Sweet Stout", and many styles are variations upon one another, e.g. "Belgian Dark Ale" and "Belgian Strong Dark Ale." As mentioned above, there are 1,412 total beers in our tidy data set, categorized in to 90 styles. Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale had no Style provided and were re-coded as "N/A". This is a string (character) variable.
+* *Ounces* - This measures the quantity, in fluid ounces, of each beer in the dataset. It ranges from 8.4 ounces to 32 ounces and is a numeric variable.
+* *BreweryName* - This is the name of the brewery. Each brewery name has a unique *Brewery_ID*. Of the 1,412 rows in this dataset, there are 374 distinct brewery names. This is a string (character class) variable.
+* *City* - This variable contains the name of the city in which the brewery is located. Of the 1,412 rows in this dataset, there are 282 distinctly-named cities. This is a string (character class) variable.
+* *State* - This variable contains the abbreviated name of the state in which the brewery is located, e.g. "OR" for Oregon. This variable has 51 values, as the District of Columbia is included. This is a string (character class) variable.
+
+For access to the data files, R code, and more, visit https://github.com/jeffweltman/StarsStripesAndBeer
