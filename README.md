@@ -1,2 +1,34 @@
-# StarsStripesAndBeer
-Craft beer study for analysis and client presentation.
+# Stars, Stripes, and Beer - README.md
+Jeff Weltman and Claudia Woodruff
+
+## Project Description
+W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafter referred to as *SS&B* - to analyze a sample of the craft beer market in order to answer the following research questions:
+
+* How many breweries are present in each state?
+* What is the median alcohol content (ABV) for each state? What is the median international bitterness unit (IBU) for each state?
+* Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+* Is there any apparent relationship between the bitterness of the beer and its alcoholic content
+
+## Directory Structure:
+
+* *Analysis directory*
+  + *Analysis.R* - R script for ingesting raw data, tidying the data, and answering research questions
+  + *Readme.md*
+* *Data directory*
+  + *BrewsAndBreweries.csv* - Merged tidy data file
+  + *Readme.md*
+  + *TidyBeers.csv* - Tidy beer data file
+  + *TidyBreweries.csv* - Tidy breweries data file
+* *Presentation directory*
+  + *Readme.md*
+  + *WW_Logo.png* - Our logo
+* *Raw directory*
+  + *Beers.csv* - Raw beer data file
+  + *Breweries.csv* - Raw breweries data file
+  + *Readme.csv*
+* *Project Root*
+  + *Codebook.Rmd*
+  + *Codebook.md*
+  + *README.md*
+  + *StarsStripesAndBeer.rproj*
+
