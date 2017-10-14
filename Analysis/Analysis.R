@@ -1,4 +1,74 @@
+######################################################################
+#  Authors: Claudia Woodruff and Jeff Weltmam, W & W Analytics       #
+#                                                                    #
+#  Purpose: Analysis for Stars, Stripes, and Beer Co.                #
+#                                                                    #
+#  Description: W&W Analytics has been commissioned to analyze       #
+#               the Craft Beer market in the United States           #
+#               to help SS&B to make the most profitable decisions   #
+#               and gain more market share of the craft beer segment.#
+#                                                                    #
+#  Analysis.r - Analyzing data to answer reearch questions           #
+#                                                                    #
+######################################################################
 
+# Read raw data sets
+#-------------------#
+
+Beers <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Beers.csv" 
+DFBeers <- repmis::source_data(Beers)
+#SHA-1 hash of the downloaded data file is:
+#  d3e3e8f8e9cf27e0df038f47ccfcfc2dfccf4217
+
+Breweries <- "https://raw.githubusercontent.com/jeffweltman/StarsStripesAndBeer/master/Raw/Breweries.csv"
+DFBreweries <- repmis::source_data(Breweries)
+#SHA-1 hash of the downloaded data file is:
+#  4579c1fc92624c25cb2643d7e61c542972fdc7ab
+
+# Cleaning data for merging: Rename variable names to aid in merging
+# and if there are N/A values in the ABV or IBU we'll remove those observations.
+#-------------------------------------------------#
+
+colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ounces")
+colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
+
+colSums(is.na(DFBeers))                 # DFBeers has 1,005 observations with IBU of NA but will be removed after merge
+
+colSums(is.na(DFBreweries))             # DFBreweries has no NA
+
+# Check for outliers
+#-------------------#
+summary(DFBeers)
+summary(DFBreweries)
+sd(DFBeers$ABV)    # 0.0126
+sd(DFBeers$IBU)    # 25.954
+# NO outliers detected in this set of observations.
+# Note: IBU values have a wide range. Reference:
+# https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/
+
+# Merge data sets
+#----------------#
+
+BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
+
+# Since all beers from South Dakota were missing IBU data, the line below sets their IBU to 0. Otherwise all their beers are deleted by the following step.
+
+BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU)
+
+BrewsAndBreweries[which(BrewsAndBreweries$Style==""),]
+
+# Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale have no Style provided. Re-coded as "N/A"
+BrewsAndBreweries$Style <- ifelse(BrewsAndBreweries$Style=="","N/A",BrewsAndBreweries$Style)
+
+# Any NA's from merged (breweries with beers with no ABV or IBU rating)? 
+colSums(is.na(BrewsAndBreweries))                           # Yes
+BrewsAndBreweries <- subset(BrewsAndBreweries, !is.na(IBU)) # Remove them
+
+
+# Create tidy data files #
+#------------------------------------------------------------------#
+TidyBeers <- BrewsAndBreweries[,c(2:7)]
+TidyBreweries <- BrewsAndBreweries[,c(1,8:10)]
 write.csv(TidyBeers,"TidyBeers.csv",row.names=FALSE)
 write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
 # Write the merged data set to a csv file:
@@ -24,10 +94,8 @@ medianIBU <-median(BrewsAndBreweries$IBU, na.rm=TRUE)
 ABV_ByState <- aggregate(ABV ~ State, data=BrewsAndBreweries, median)
 IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 
-# Plot a bar chart to compare.
-#-----------------------------#
-#    (How do we compare ABV and IBU in a Barchart? 
-#     What does the end product look like? )
+# Plot bar chart to compare.
+#---------------------------#
 
 # First, we merge the median ABV and median IBU data with the state data to get a "wide" table
 
@@ -74,7 +142,6 @@ ggplot(IBU_ByState,aes(State,IBU))+
   ggtitle("Median IBU Per State")+
   coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
 
-# ---I like your factor idea, but not sure if we need it considering the above plots. JW--- #
 
 # Add a factor column on the ABV:
 # Number | Label      | Value of ABV
@@ -112,8 +179,6 @@ MaxABV <- MaxABV[order(-MaxABV$ABV),]
 paste("With an ABV of ", (MaxABV[1, "ABV"]),", ", (MaxABV[1, "State"]), " has the beer with highest alcohol content: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$ABV==MaxABV[1, "ABV"])],".", sep="")
 
 
-
-
 # Determine which state has the most bitter (IBU) beer.
 #-----------------------------------------------------#
 
@@ -125,6 +190,7 @@ paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has th
 
 # Print a summary of statistics for the ABV variable.
 #---------------------------------------------------#
+
 
 print(summary(BrewsAndBreweries$ABV))
 
@@ -144,6 +210,11 @@ reg
 
 # Now we can peform a scatterplot in ggplot2 - perhaps it might be more enlightening?
 library(ggplot2)
-ggplot(BrewsAndBreweries, aes(x=ABV, y=IBU))+
-  geom_point(size=2) + geom_abline(intercept=-34.1, slope = 1282.0)+
+ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
+  geom_point(size=2)+
+  geom_abline(intercept=-34.1, slope = 1282.0)+
   ggtitle("Correlation Between ABV and IBU")
+
+#ggplot(BrewsAndBreweries, aes(x=ABV, y=IBU))+
+#  geom_point(size=2) + geom_abline(intercept=-34.1, slope = 1282.0)+
+#  ggtitle("Correlation Between ABV and IBU")
