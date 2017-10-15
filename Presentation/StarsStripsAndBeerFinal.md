@@ -472,7 +472,14 @@ ggplot(BeerFacts.long,aes(x=State,y=value,fill=factor(variable)))+
                       labels=c("ABV","IBU"))+
   xlab("State")+ylab("Level")+
   ggtitle("Median ABV and Median IBU Per State")+
+  scale_fill_discrete(breaks=c("ABV","IBU"))+
+         theme(legend.title=element_blank())+
   coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
+```
+
+```
+## Scale for 'fill' is already present. Adding another scale for 'fill',
+## which will replace the existing scale.
 ```
 
 ![](StarsStripsAndBeerFinal_files/figure-docx/bar-1.png)<!-- -->
