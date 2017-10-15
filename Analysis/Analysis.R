@@ -57,7 +57,7 @@ BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
 # IBU to 0.  Otherwise all their beers are deleted by the following step.
 
 BrewsAndBreweries$IBU <- ifelse(BrewsAndBreweries$State=="SD",0,BrewsAndBreweries$IBU)
-BrewsAndBreweries[which(BrewsAndBreweries$Style==""),]
+BrewsAndBreweries[which(BrewsAndBreweries$Style=="N/A"),]
 
 # Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale have no Style provided.
 # Re-coded as "N/A".
@@ -77,6 +77,11 @@ tail(BrewsAndBreweries, 6)         # Looks okay
 # Report the number of NA's in each column.
 
 colSums(is.na(BrewsAndBreweries))  # 0
+
+# Determine count of breweries per state
+
+library(sqldf)
+BreweryCount <- sqldf("select count(distinct(Brewery_id)) as BreweryCount, State from BrewsAndBreweries group by State")
 
 # Compute the median alcohol content (ABV) and international
 # bitterness unit (IBU) for each state.
