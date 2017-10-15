@@ -22,6 +22,12 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
 * *Presentation directory*
   + *Readme.md*
   + *WW_Logo.png* - Our logo
+  + Final presentation document (various extensions)
+    * StarsStripsAndBeerFinal.Rmd
+    * StarsStripsAndBeerFinal.md
+    * StarsStripsAndBeerFinal.html
+    * StarsStripsAndBeerFinal.docs
+  
 * *Raw directory*
   + *Beers.csv* - Raw beer data file
   + *Breweries.csv* - Raw breweries data file
@@ -31,4 +37,3 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
   + *Codebook.md*
   + *README.md*
   + *StarsStripesAndBeer.rproj*
-
