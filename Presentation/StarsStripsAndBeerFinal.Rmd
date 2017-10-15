@@ -125,7 +125,15 @@ colSums(is.na(BrewsAndBreweries))    # 0 NA's
 
 
 ### Analysis
-We took a look at various statistics such as median IBU, ABV by state, and IBU by state. 
+
+To answer the first question - how many breweries are present in each state - we looked at the distinct Brewery_ID per state.
+```{r Breweries per state, echo=TRUE}
+library(sqldf)
+BreweryCount <- sqldf("select count(distinct(Brewery_id)) as BreweryCount, State from BrewsAndBreweries group by State")
+BreweryCount
+```
+
+We then took a look at various statistics such as median IBU, ABV by state, and IBU by state. 
 ```{r initial stats}
 medianIBU <-median(BrewsAndBreweries$IBU, na.rm=TRUE)
 ABV_ByState <- aggregate(ABV ~ State, data=BrewsAndBreweries, median)

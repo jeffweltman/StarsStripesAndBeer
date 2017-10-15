@@ -295,7 +295,106 @@ colSums(is.na(BrewsAndBreweries))    # 0 NA's
 
 
 ### Analysis
-We took a look at various statistics such as median IBU, ABV by state, and IBU by state. 
+
+To answer the first question - how many breweries are present in each state - we looked at the distinct Brewery_ID per state.
+
+```r
+library(sqldf)
+```
+
+```
+## Warning: package 'sqldf' was built under R version 3.4.1
+```
+
+```
+## Loading required package: gsubfn
+```
+
+```
+## Warning: package 'gsubfn' was built under R version 3.4.1
+```
+
+```
+## Loading required package: proto
+```
+
+```
+## Warning: package 'proto' was built under R version 3.4.1
+```
+
+```
+## Could not load tcltk.  Will use slower R code instead.
+```
+
+```
+## Loading required package: RSQLite
+```
+
+```
+## Warning: package 'RSQLite' was built under R version 3.4.1
+```
+
+```r
+BreweryCount <- sqldf("select count(distinct(Brewery_id)) as BreweryCount, State from BrewsAndBreweries group by State")
+BreweryCount
+```
+
+```
+##    BreweryCount State
+## 1             6    AK
+## 2             3    AL
+## 3             1    AR
+## 4             6    AZ
+## 5            31    CA
+## 6            35    CO
+## 7             3    CT
+## 8             1    DC
+## 9             1    DE
+## 10           10    FL
+## 11            5    GA
+## 12            3    HI
+## 13            4    IA
+## 14            5    ID
+## 15           10    IL
+## 16           17    IN
+## 17            3    KS
+## 18            2    KY
+## 19            3    LA
+## 20           12    MA
+## 21            4    MD
+## 22            4    ME
+## 23           15    MI
+## 24           11    MN
+## 25            9    MO
+## 26            2    MS
+## 27            4    MT
+## 28           11    NC
+## 29            1    ND
+## 30            2    NE
+## 31            1    NH
+## 32            3    NJ
+## 33            3    NM
+## 34            2    NV
+## 35           12    NY
+## 36            9    OH
+## 37            5    OK
+## 38           21    OR
+## 39           13    PA
+## 40            4    RI
+## 41            2    SC
+## 42            1    SD
+## 43            3    TN
+## 44           23    TX
+## 45            2    UT
+## 46           14    VA
+## 47            8    VT
+## 48           16    WA
+## 49            9    WI
+## 50            1    WV
+## 51            3    WY
+```
+
+We then took a look at various statistics such as median IBU, ABV by state, and IBU by state. 
 
 ```r
 medianIBU <-median(BrewsAndBreweries$IBU, na.rm=TRUE)
@@ -376,7 +475,7 @@ ggplot(BeerFacts.long,aes(x=State,y=value,fill=factor(variable)))+
   coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
-![](StarsStripsAndBeerFinal_files/figure-html/bar-1.png)<!-- -->
+![](StarsStripsAndBeerFinal_files/figure-docx/bar-1.png)<!-- -->
 
 This bar plot shows median ABV data per state:
 
@@ -388,7 +487,7 @@ ggplot(ABV_ByState,aes(State,ABV))+
   coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
-![](StarsStripsAndBeerFinal_files/figure-html/bar2-1.png)<!-- -->
+![](StarsStripsAndBeerFinal_files/figure-docx/bar2-1.png)<!-- -->
 
 This bar plot shows median IBU data per state (South Dakota == 0):
 
@@ -400,7 +499,7 @@ ggplot(IBU_ByState,aes(State,IBU))+
   coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
-![](StarsStripsAndBeerFinal_files/figure-html/bar3-1.png)<!-- -->
+![](StarsStripsAndBeerFinal_files/figure-docx/bar3-1.png)<!-- -->
 
 We determined which state had the highest ABV. 
 
@@ -446,7 +545,7 @@ print(summary(BrewsAndBreweries$ABV))
 plot(x=BrewsAndBreweries$ABV, y=BrewsAndBreweries$IBU, xlab = "Alcohol Content (ABV)", ylab = "Bitterness (IBU)", main = "Relationship Between Bitterness and Alcohol Content")
 ```
 
-![](StarsStripsAndBeerFinal_files/figure-html/initial scatter plot-1.png)<!-- -->
+![](StarsStripsAndBeerFinal_files/figure-docx/initial scatter plot-1.png)<!-- -->
 
 To confirm, we ran a correlation test to get Pearson's R, which indicated that 66.6% of the variation in IBU is explained by a change in ABV. 
 
@@ -510,7 +609,7 @@ ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
   ggtitle("Correlation Between ABV and IBU")
 ```
 
-![](StarsStripsAndBeerFinal_files/figure-html/scatter2-1.png)<!-- -->
+![](StarsStripsAndBeerFinal_files/figure-docx/scatter2-1.png)<!-- -->
 
 
 ## Conclusion
