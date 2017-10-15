@@ -42,3 +42,6 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
   ## FAQs
   ### Where did this data come from?
   *These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media.*
+  
+  ### This is exceptional work! Can I contact W&W Analytics regarding other projects?
+  *We would love to hear from you! Thank you for your interest.*
