@@ -27,13 +27,18 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
     * StarsStripsAndBeerFinal.md
     * StarsStripsAndBeerFinal.html
     * StarsStripsAndBeerFinal.docs
-  
 * *Raw directory*
   + *Beers.csv* - Raw beer data file
   + *Breweries.csv* - Raw breweries data file
   + *Readme.csv*
 * *Project Root*
-  + *Codebook.Rmd*
-  + *Codebook.md*
+  + Project codebook (various extensions)
+    * Codebook.Rmd
+    * Codebook.md
+    * Codebook.html
   + *README.md*
   + *StarsStripesAndBeer.rproj*
+  
+  ## FAQs
+  ### Where did this data come from?
+  *These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media.*
