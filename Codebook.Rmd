@@ -2,9 +2,10 @@
 title: "StarsStripesAndBeer Codebook"
 author: "Jeff Weltman"
 date: "October 12, 2017"
-output: 
+output:
   html_document:
-    keep_md: true
+    keep_md: yes
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -119,5 +120,6 @@ BrewsAndBreweries.scsv contains 1,412 across 10 variables:
 * *BreweryName* - This is the name of the brewery. Each brewery name has a unique *Brewery_ID*. Of the 1,412 rows in this dataset, there are 374 distinct brewery names. This is a string (character class) variable.
 * *City* - This variable contains the name of the city in which the brewery is located. Of the 1,412 rows in this dataset, there are 282 distinctly-named cities. This is a string (character class) variable.
 * *State* - This variable contains the abbreviated name of the state in which the brewery is located, e.g. "OR" for Oregon. This variable has 51 values, as the District of Columbia is included. This is a string (character class) variable.
+* *ABVlvl* - This variable determines the level of ABV. It is a factor variable of "low", "med low", "med high" or "high".
 
 For access to the data files, R code, and more, visit https://github.com/jeffweltman/StarsStripesAndBeer
