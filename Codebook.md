@@ -210,7 +210,7 @@ TidyBreweries.csv contains 1,412 observations across 4 variables:
 ##Description of BrewsAndBreweries.csv, our merged datafile
 BrewsAndBreweries.scsv contains 1,412 across 10 variables:
 
-* *BreweryName* - The Foreign Key (FK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
+* *Brewery_ID* - The Primary Key (PK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
 * *BeerName* - The advertised name of the beer. This is a string (class character).
 * *Beer_ID* - This is a unique identifier for each beer. *Beer_ID* is an integer which ranges from 1 to 2,692.
 * *ABV* - This is the measurement of the **A**lcohol **B**y **V**olume of each beer, as advertised in compliance with United States law. This identifies what percentage of the beverage is alcoholic. In this dataset, ABV ranges from 0.027 to 0.125. This is a numeric variable.
@@ -220,6 +220,6 @@ BrewsAndBreweries.scsv contains 1,412 across 10 variables:
 * *BreweryName* - This is the name of the brewery. Each brewery name has a unique *Brewery_ID*. Of the 1,412 rows in this dataset, there are 374 distinct brewery names. This is a string (character class) variable.
 * *City* - This variable contains the name of the city in which the brewery is located. Of the 1,412 rows in this dataset, there are 282 distinctly-named cities. This is a string (character class) variable.
 * *State* - This variable contains the abbreviated name of the state in which the brewery is located, e.g. "OR" for Oregon. This variable has 51 values, as the District of Columbia is included. This is a string (character class) variable.
-* *ABVlvl* - This variable determines the level of ABV. It is a factor variable of "low", "med low", "med high" or "high".
+* *ABVlvl* - This variable determines the level of ABV. It is a factor variable of "low", "med low", "med high," or "high".
 
 For access to the data files, R code, and more, visit https://github.com/jeffweltman/StarsStripesAndBeer

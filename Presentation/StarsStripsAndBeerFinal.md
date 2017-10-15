@@ -181,7 +181,7 @@ BrewsAndBreweries[which(BrewsAndBreweries$Style==""),]
 ## 227         30                Special Release    2210    NA  NA      
 ## 455         67                  OktoberFiesta    2527 0.053  27      
 ## 946        161 Kilt Lifter Scottish-Style Ale    1635 0.060  21      
-## 992        167                 The CROWLERâ¢    1796    NA  NA      
+## 992        167                 The CROWLERâ<U+0084>¢    1796    NA  NA      
 ## 993        167           CAN'D AID Foundation    1790    NA  NA      
 ##     Ounces                BreweryName         City State
 ## 227     16        Cedar Creek Brewery Seven Points    TX
@@ -311,7 +311,7 @@ library(reshape2)
 ```
 
 ```
-## Warning: package 'reshape2' was built under R version 3.4.2
+## Warning: package 'reshape2' was built under R version 3.4.1
 ```
 
 ```r
@@ -336,7 +336,7 @@ library(ggplot2)
 ```
 
 ```
-## Warning: package 'ggplot2' was built under R version 3.4.2
+## Warning: package 'ggplot2' was built under R version 3.4.1
 ```
 
 ```r
