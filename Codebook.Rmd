@@ -1,6 +1,6 @@
 ---
 title: "StarsStripesAndBeer Codebook"
-author: "Jeff Weltman"
+author: "Jeff Weltman & Claudia Woodruff"
 date: "October 12, 2017"
 output:
   html_document:
