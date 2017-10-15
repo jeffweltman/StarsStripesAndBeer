@@ -1,5 +1,5 @@
-# An Analysis of Characteristic Relationships of Crafted Beer
-Claudia Woodruff  
+# An Analysis of Characteristic Relationships of Craft Beer
+Claudia Woodruff & Jeff Weltman  
 October 12, 2017  
 
 
@@ -10,7 +10,7 @@ October 12, 2017
 
 W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* to analyze the Craft Beer market in the United States and to determine any associative relationship between primary beer characteristics.
 
-The owners would like to grow their business, and would like any insight we may provide to enable them to make the best decision to increase their market share. Specifically, they would like to have a better understanding of the relationship between ABV and IBU by state.  They suspect that refining the ABV and IBU levels of their crafted beers would be key to gaining more market share of the craft beer segment.
+The owners would like to grow their business and would like any insight we may provide to enable them to make the best decisions to increase their market share. Specifically, they would like to have a better understanding of the relationship between ABV and IBU across each of the 50 states in the United States.  They suspect that refining the ABV and IBU levels of their craft beers would be key to gaining more market share of the craft beer segment.
 
 ## Project Description
 W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafter referred to as *SS&B* - to analyze a sample of the craft beer market in order to answer the following research questions:
@@ -23,7 +23,7 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
 * Is there any apparent relationship between the bitterness of the beer and its alcoholic content?
 
 #### Hypothesis
-In this study we will determine whether ther is an associative, if not a causal relationship between ABV and IBU levels in beer.
+In this study we will determine whether there is an associative relationship between ABV and IBU levels in beer.
 
 #### Observational Study
 As this is an observational study, we note that any conclusions drawn from the data can only be inferred as associative within the scope of this sample population. 
@@ -33,7 +33,7 @@ This research is therefore not intended to support such conclusions as, for exam
 ## Study Design and Data Processing
 The study was designed to be a representative sample of craft breweries, both large and small, across all 50 states of the United States of America. The data, obtained by the client, was consolidated from disparate sources into these two data files.
 
-These data were collected from public domain sources. The sources are known to be reputableand include *ratebeer.com* and *Brewer's Association* websites and social media. 
+These data were collected from public domain sources. The sources are known to be reputable and include *ratebeer.com*, *Brewer's Association* websites, and social media. 
 
 
 ```r
@@ -76,7 +76,7 @@ DFBreweries <- repmis::source_data(Breweries)
 ## Method
 
 ### Data Tidying
-Our raw data required some tidying. This is not uncommon with this type of data. First, we renamed variable names in order to aid in merging the two files.
+Our raw data required some tidying, which is common with this type of data. First, we renamed variable names in order to aid in merging the two files.
 
 
 ```r
@@ -84,7 +84,7 @@ colnames(DFBeers) <- c("BeerName","Beer_ID","ABV","IBU","Brewery_ID","Style","Ou
 colnames(DFBreweries) <- c("Brewery_ID","BreweryName","City","State")
 ```
 
-We discovered that there were many incomplete records in the raw data sets, likely due to the dependency on self-reported information. Therefore, some data tidying was necessary. There were numerous observations with missing ABV and/or IBU values. As the analysis was dependent upon these values, these observations were not included in this study. North Dakota was an exception, as an IBU value was missing from all ND observations. To avoid omitting all ND beers from the study, we set their IBU value to zero rather than deleting the observations completely.  We chose to remove the observations after We merge the data sets.
+We discovered that there were many incomplete records in the raw data sets, likely due to the dependency on self-reported information. Therefore, some data tidying was necessary. There were numerous observations with missing ABV and/or IBU values. As the analysis was dependent upon these values, these observations were not included in this study. We chose to remove the observations after We merge the data sets. North Dakota was an exception, as an IBU value was missing from all ND observations. To avoid omitting all ND beers from the study, we set their IBU value to zero rather than deleting the observations completely.  
 
 
 ```r
@@ -107,7 +107,7 @@ colSums(is.na(DFBreweries))  # DFBreweries has no NA
 ##           0           0           0           0
 ```
 
-We also checked for outliers. The standard deviation for the ABV variables was low, concluding there were no outliers of concern. The standard deviation for the IBU variables was quite high at over 25 however, the IBU values do typically have a wide range, so we did not remove any outliers based on IBU. 
+We also checked for outliers. The standard deviation for the ABV variables was low, concluding there were no outliers of concern. Although the standard deviation for the IBU measurement was quite high at over 25, we did not remove any outliers based on IBU as research indicates that IBU values do typically have a wide range. 
 (ref: https://www.brewersfriend.com/2017/05/07/beer-styles-ibu-chart-2017-update/)
 
 
@@ -166,9 +166,9 @@ sd(DFBeers$IBU)    # 25.954
 
 
 ### Data Merging
-Since all beers from South Dakota were missing IBU data, we set their IBU to 0. Otherwise all their beers would be deleted. 
+Since all beers from South Dakota were missing IBU data, we set their IBU to 0. Otherwise, all their beers would be deleted in the null removal process. 
 
-We noted that some of the observations had a blank in the "Styles" column. We recoded these to NA so they also would be removed from our data set. We then merged the raw data sets and removed the observations with NA's as previously described.
+We noted that two of the observations had a blank in the "Styles" column. We recoded these to N/A so they would not be removed from our data set, as our research questions were chiefly interested in ABV and IBU. We then merged the raw data sets and removed the observations with NA's as previously described.
 
 ```r
 BrewsAndBreweries <- merge(x=DFBeers, y=DFBreweries, by="Brewery_ID", all=TRUE)
@@ -218,13 +218,13 @@ We wrote the merged data set to a csv file. We also created two tidy data sets f
 write.csv(BrewsAndBreweries, file = "BrewsAndBreweries.csv", row.names=FALSE)
 
 # Create tidy data files
-TidyBeers <- BrewsAndBreweries[,c(2:7)]
+TidyBeers <- BrewsAndBreweries[,c(1:7)]
 TidyBreweries <- BrewsAndBreweries[,c(1,8:10)]
 write.csv(TidyBeers,"TidyBeers.csv",row.names=FALSE)
 write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
 ```
  
-A check on the first and last six observations from the merged (tidy) file did not indicate any issues with the merged file. We also checked that we indded have no NA's remaining. 
+A check on the first and last six observations from the merged (tidy) file did not indicate any issues with the merged file. We also checked that we indeed have no NA's remaining. 
 
 ```r
 head(BrewsAndBreweries, 6)        # Looks okay
@@ -295,7 +295,7 @@ colSums(is.na(BrewsAndBreweries))    # 0 NA's
 
 
 ### Analysis
-We took a look at varous statistics such as median IBU, ABV by state, and IBU by state. 
+We took a look at various statistics such as median IBU, ABV by state, and IBU by state. 
 
 ```r
 medianIBU <-median(BrewsAndBreweries$IBU, na.rm=TRUE)
@@ -303,7 +303,7 @@ ABV_ByState <- aggregate(ABV ~ State, data=BrewsAndBreweries, median)
 IBU_ByState <- aggregate(IBU ~ State, data=BrewsAndBreweries, median)
 ```
 
-A bar chart was created; First, we merged the median ABV and median IBU data with the state data to get a "wide" table. For easier side-by-side comparison, we multiply ABV by 807 to approximate the same range of values.  Then we melted these facts to get a long table with ABV and IBU as variables, and their values in the Value column. The following plot shows side-by-side median IBU and ABV data per state:
+A bar chart was created; First, we merged the median ABV and median IBU data with the state data to get a "wide" table. For easier side-by-side comparison, we multiply ABV by 807 to approximate the same range of values.  Then we melted these facts to get a long table with ABV and IBU as two values for the *variable* column and their levels became values in the *Value* column. The following plot shows side-by-side median IBU and ABV data per state:
 
 
 ```r
@@ -320,7 +320,7 @@ BeerFacts <- merge(x=ABV_ByState,y=IBU_ByState,by="State")
 # For easier side-by-side comparison, we multiply ABV by 807 to approximate the same range of values
 BeerFacts$ABV <- BeerFacts$ABV * 807
 
-# Then we melt these facts to get a long table with ABV and IBU as variables, and their values in the Value column
+# Then we melt these facts to get a long table with ABV and IBU as two values for the variable column, and their levels in the Value column
 BeerFacts.long <- melt(BeerFacts)
 ```
 
@@ -373,7 +373,7 @@ ggplot(BeerFacts.long,aes(x=State,y=value,fill=factor(variable)))+
                       labels=c("ABV","IBU"))+
   xlab("State")+ylab("Level")+
   ggtitle("Median ABV and Median IBU Per State")+
-  coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
+  coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
 ![](StarsStripsAndBeerFinal_files/figure-html/bar-1.png)<!-- -->
@@ -385,7 +385,7 @@ ggplot(ABV_ByState,aes(State,ABV))+
   geom_col(fill="#45415E")+
   coord_cartesian(ylim=c(0.03,0.075))+
   ggtitle("Median ABV Per State")+
-  coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
+  coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
 ![](StarsStripsAndBeerFinal_files/figure-html/bar2-1.png)<!-- -->
@@ -397,7 +397,7 @@ ggplot(IBU_ByState,aes(State,IBU))+
   geom_col(fill="#91B3BC")+
   coord_cartesian(ylim=c(0,63))+
   ggtitle("Median IBU Per State")+
-  coord_flip() # sets value on y axis, states on x. Commenting out the + above and this line will reverse
+  coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
 ![](StarsStripsAndBeerFinal_files/figure-html/bar3-1.png)<!-- -->
@@ -409,11 +409,11 @@ MaxABV <- aggregate(ABV ~ State,
                     data=BrewsAndBreweries, 
                     max)
 MaxABV <- MaxABV[order(-MaxABV$ABV),]
-paste("With an ABV of ", (MaxABV[1, "ABV"]),", ", (MaxABV[1, "State"]), " has the beer with highest alcohol content: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$ABV==MaxABV[1, "ABV"])],".", sep="")
+paste("With an ABV of ", (MaxABV[1, "ABV"]),", ", (MaxABV[1, "State"]), " has the beer with the highest alcohol content: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$ABV==MaxABV[1, "ABV"])],".", sep="")
 ```
 
 ```
-## [1] "With an ABV of 0.125, KY has the beer with highest alcohol content: London Balling."
+## [1] "With an ABV of 0.125, KY has the beer with the highest alcohol content: London Balling."
 ```
 
 We determined which state had the highest IBU.
@@ -423,11 +423,11 @@ MaxIBU <- aggregate(IBU ~ State,
                     data=BrewsAndBreweries, 
                     max)
 MaxIBU <- MaxIBU[order(-MaxIBU$IBU), ]
-paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has the beer with highest bitterness: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$IBU==MaxIBU[1, "IBU"])],".", sep="")
+paste("With an IBU of ", (MaxIBU[1, "IBU"]),", ", (MaxIBU[1, "State"]), " has the beer with the highest bitterness: ", BrewsAndBreweries$BeerName[which(BrewsAndBreweries$IBU==MaxIBU[1, "IBU"])],".", sep="")
 ```
 
 ```
-## [1] "With an IBU of 138, OR has the beer with highest bitterness: Bitter Bitch Imperial IPA."
+## [1] "With an IBU of 138, OR has the beer with the highest bitterness: Bitter Bitch Imperial IPA."
 ```
 
 We reviewed the summary and plots which indicated a positive correlation does appear likely. 
@@ -513,7 +513,6 @@ ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
 ![](StarsStripsAndBeerFinal_files/figure-html/scatter2-1.png)<!-- -->
 
 
-
 ## Conclusion
-We conclude that there is a corrolation between ABV and IBU value in beer; at the higher ABV levels we see the IBV levels trend higher. This *may not* indicate that higher levels of ABV *causes* bitterness.  An underlying variable that affects both ABV and IBU in a similar way must be considered for later study. 
+The evidence suggests that there is a positive correlation between ABV and IBU value in beer, indicated both graphically and by the 0.666 Pearson's R. As 66.6% of the variation in IBU is explained by variation in ABV, we expect to see the IBU levels trend higher as ABV increases. Furthermore, by including breweries from all 50 states, we have accounted for a wide variety of confounding variables. These include brewery location - altitude, barometric pressure, temperature, etc. - as well as the ingredients of the craft brews themselves. As this is an observational study, we cannot conclude that alcohol level *causes* bitterness, but the evidence of assocation merits further study. After thorough data analysis, we therefore conclude that alcohol content is positively associated with bitterness level within this population.
 
