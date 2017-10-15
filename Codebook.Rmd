@@ -31,7 +31,7 @@ This research is therefore not intended to support such conclusions as, for exam
 ###Collection of the raw data
 *SS&B* provided two raw data files: **Beers.csv** and **Breweries.csv**. 
 
-These data were collected from the public domain across a variety of sources, including *ratebeer.com* and the craft breweries' websites and social media. There are many incomplete records, due largely to the dependency on self-reported information; the tidying of the data will be addressed below.
+These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media. There are many incomplete records, due largely to the dependency on self-reported information; the tidying of the data will be addressed below.
 
 ##Creating the tidy datafile
 1. The raw data sets are read in:
