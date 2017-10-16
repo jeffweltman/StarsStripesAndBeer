@@ -302,34 +302,6 @@ To answer the first question - how many breweries are present in each state - we
 library(sqldf)
 ```
 
-```
-## Warning: package 'sqldf' was built under R version 3.4.1
-```
-
-```
-## Loading required package: gsubfn
-```
-
-```
-## Warning: package 'gsubfn' was built under R version 3.4.1
-```
-
-```
-## Loading required package: proto
-```
-
-```
-## Warning: package 'proto' was built under R version 3.4.1
-```
-
-```
-## Loading required package: RSQLite
-```
-
-```
-## Warning: package 'RSQLite' was built under R version 3.4.1
-```
-
 ```r
 BreweryCount <- sqldf("select count(distinct(Brewery_id)) as BreweryCount, State from BrewsAndBreweries group by State")
 BreweryCount
