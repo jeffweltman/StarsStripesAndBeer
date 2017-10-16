@@ -44,7 +44,7 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
   *These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media.*
   
   ### I especially loved (insert plot/section here). Which one of you is responsible for this?
-  This project for *SS&B* was a truly collaborative endeavor. Both Claudia and Jeff applied their expertise to the research questions, data files, and code. The Codebook and this Readme have been prepared largely by Jeff. The final presentation document was almost exclusively Claudia's masterpiece.
+  This project for *SS&B* was a truly collaborative endeavor. Both Claudia and Jeff applied their expertise to the research questions, data files, and code. The Codebook and this Readme have been prepared largely by Jeff. The final presentation document was largely Claudia's masterpiece.
   
   ### This is exceptional work! Can I contact W&W Analytics regarding other projects?
   *We would love to hear from you! Thank you for your interest.*
