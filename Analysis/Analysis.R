@@ -212,7 +212,7 @@ ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
 # Finish up: Write our data sets to file 
 ######################################################################
 # Create tidy data files for future use.
-TidyBeers <- BrewsAndBreweries[,c(2:7)]
+TidyBeers <- BrewsAndBreweries[,c(1:7)]
 TidyBreweries <- BrewsAndBreweries[,c(1,8:10)]
 write.csv(TidyBeers,"TidyBeers.csv",row.names=FALSE)
 write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
