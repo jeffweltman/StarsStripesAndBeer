@@ -48,7 +48,7 @@ This project for *SS&B* was a truly collaborative endeavor. Both Claudia and Jef
   
 ### Do you have a way I could view this presentation on the web?
 *We do indeed! Jeff created a Shiny app for just that purpose.*
-*For access to this interactive web presentation, visit https://jeffweltman.shinyapps.io/StateBrews/*
+*For access to this interactive web presentation, visit http://192.241.226.80/shiny/StarsStripesAndBeer/*
 
 ### This is exceptional work! Can I contact W&W Analytics regarding other projects?
 *We would love to hear from you! Thank you for your interest.*
