@@ -268,3 +268,8 @@ ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
 ## Conclusion
 The evidence suggests that there is a positive correlation between ABV and IBU value in beer, indicated both graphically and by the 0.666 Pearson's R. As 66.6% of the variation in IBU is explained by variation in ABV, we expect to see the IBU levels trend higher as ABV increases. Furthermore, by including breweries from all 50 states, we have accounted for a wide variety of confounding variables. These include brewery location - altitude, barometric pressure, temperature, etc. - as well as the ingredients of the craft brews themselves. As this is an observational study, we cannot conclude that alcohol level *causes* bitterness, but the evidence of assocation merits further study. After thorough data analysis, we therefore conclude that alcohol content is positively associated with bitterness level within this population.
 
+### Session Info
+```{r session_info, include=TRUE, echo=TRUE, results='markup'}
+library(pander)
+pander(sessionInfo())
+```

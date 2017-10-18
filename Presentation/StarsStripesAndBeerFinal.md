@@ -302,6 +302,38 @@ To answer the first question - how many breweries are present in each state - we
 library(sqldf)
 ```
 
+```
+## Warning: package 'sqldf' was built under R version 3.4.1
+```
+
+```
+## Loading required package: gsubfn
+```
+
+```
+## Warning: package 'gsubfn' was built under R version 3.4.1
+```
+
+```
+## Loading required package: proto
+```
+
+```
+## Warning: package 'proto' was built under R version 3.4.1
+```
+
+```
+## Could not load tcltk.  Will use slower R code instead.
+```
+
+```
+## Loading required package: RSQLite
+```
+
+```
+## Warning: package 'RSQLite' was built under R version 3.4.1
+```
+
 ```r
 BreweryCount <- sqldf("select count(distinct(Brewery_id)) as BreweryCount, State from BrewsAndBreweries group by State")
 BreweryCount
@@ -590,3 +622,32 @@ ggplot(data = BrewsAndBreweries, aes(x=ABV, y=IBU, color = ABVlvl))+
 ## Conclusion
 The evidence suggests that there is a positive correlation between ABV and IBU value in beer, indicated both graphically and by the 0.666 Pearson's R. As 66.6% of the variation in IBU is explained by variation in ABV, we expect to see the IBU levels trend higher as ABV increases. Furthermore, by including breweries from all 50 states, we have accounted for a wide variety of confounding variables. These include brewery location - altitude, barometric pressure, temperature, etc. - as well as the ingredients of the craft brews themselves. As this is an observational study, we cannot conclude that alcohol level *causes* bitterness, but the evidence of assocation merits further study. After thorough data analysis, we therefore conclude that alcohol content is positively associated with bitterness level within this population.
 
+### Session Info
+
+```r
+library(pander)
+```
+
+```
+## Warning: package 'pander' was built under R version 3.4.2
+```
+
+```r
+pander(sessionInfo())
+```
+
+**R version 3.4.0 (2017-04-21)**
+
+**Platform:** x86_64-w64-mingw32/x64 (64-bit) 
+
+**locale:**
+_LC_COLLATE=English_United States.1252_, _LC_CTYPE=English_United States.1252_, _LC_MONETARY=English_United States.1252_, _LC_NUMERIC=C_ and _LC_TIME=English_United States.1252_
+
+**attached base packages:** 
+_stats_, _graphics_, _grDevices_, _utils_, _datasets_, _methods_ and _base_
+
+**other attached packages:** 
+_pander(v.0.6.1)_, _ggplot2(v.2.2.1)_, _reshape2(v.1.4.2)_, _sqldf(v.0.4-11)_, _RSQLite(v.2.0)_, _gsubfn(v.0.6-6)_ and _proto(v.1.0.0)_
+
+**loaded via a namespace (and not attached):** 
+_Rcpp(v.0.12.12)_, _compiler(v.3.4.0)_, _plyr(v.1.8.4)_, _R.methodsS3(v.1.7.1)_, _R.utils(v.2.5.0)_, _tools(v.3.4.0)_, _digest(v.0.6.12)_, _bit(v.1.1-12)_, _evaluate(v.0.10.1)_, _memoise(v.1.1.0)_, _tibble(v.1.3.4)_, _gtable(v.0.2.0)_, _R.cache(v.0.12.0)_, _pkgconfig(v.2.0.1)_, _rlang(v.0.1.2)_, _DBI(v.0.7)_, _curl(v.2.8.1)_, _yaml(v.2.1.14)_, _httr(v.1.3.1)_, _stringr(v.1.2.0)_, _knitr(v.1.17)_, _rprojroot(v.1.2)_, _bit64(v.0.9-7)_, _grid(v.3.4.0)_, _data.table(v.1.10.4)_, _R6(v.2.2.2)_, _rmarkdown(v.1.6)_, _blob(v.1.1.0)_, _magrittr(v.1.5)_, _scales(v.0.5.0)_, _backports(v.1.1.1)_, _htmltools(v.0.3.6)_, _repmis(v.0.5)_, _colorspace(v.1.3-2)_, _labeling(v.0.3)_, _stringi(v.1.1.5)_, _lazyeval(v.0.2.0)_, _munsell(v.0.4.3)_, _chron(v.2.3-50)_ and _R.oo(v.1.21.0)_
