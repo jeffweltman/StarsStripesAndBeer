@@ -39,20 +39,24 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
   + *README.md*
   + *StarsStripesAndBeer.rproj*
   
-  ## FAQs
-  ### Where did this data come from?
-  *These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media.*
+## FAQs
+### Where did this data come from?
+*These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media.*
   
-  ### I especially loved (insert plot/section here). Which one of you is responsible for this?
-  This project for *SS&B* was a truly collaborative endeavor. Both Claudia and Jeff applied their expertise to the research questions, data files, and code. The Codebook and this Readme have been prepared largely by Jeff. The final presentation document was largely Claudia's masterpiece.
+### I especially loved (insert plot/section here). Which one of you is responsible for this?
+This project for *SS&B* was a truly collaborative endeavor. Both Claudia and Jeff applied their expertise to the research questions, data files, and code. The Codebook and this Readme have been prepared largely by Jeff. The final presentation document was largely Claudia's masterpiece.
   
-  ### This is exceptional work! Can I contact W&W Analytics regarding other projects?
-  *We would love to hear from you! Thank you for your interest.*
+### Do you have a way I could view this presentation on the web?
+*We do indeed! Jeff created a Shiny app for just that purpose.*
+*For access to this interactive web presentation, visit https://jeffweltman.shinyapps.io/StateBrews/*
+
+### This is exceptional work! Can I contact W&W Analytics regarding other projects?
+*We would love to hear from you! Thank you for your interest.*
   
-  ***
+***
   
-  ### Session Info
-  **R version 3.4.0 (2017-04-21)**
+### Session Info
+**R version 3.4.0 (2017-04-21)**
 
 **Platform:** x86_64-w64-mingw32/x64 (64-bit) 
 
