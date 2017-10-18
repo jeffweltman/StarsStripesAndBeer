@@ -122,8 +122,6 @@ BrewsAndBreweries.scsv contains 1,412 across 10 variables:
 * *State* - This variable contains the abbreviated name of the state in which the brewery is located, e.g. "OR" for Oregon. This variable has 51 values, as the District of Columbia is included. This is a string (character class) variable.
 * *ABVlvl* - This variable determines the level of ABV. It is a factor variable of "low", "med low", "med high," or "high".
 
-For access to the data files, R code, and more, visit https://github.com/jeffweltman/StarsStripesAndBeer
-
 For access to an interactive web presentation, visit https://jeffweltman.shinyapps.io/StateBrews/
 
 ### Session Info
