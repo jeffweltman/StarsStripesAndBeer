@@ -9,4 +9,4 @@
     * StarsStripsAndBeerFinal.docs
     
 ## Please visit our presentation on the web, powered by Shiny: 
-https://jeffweltman.shinyapps.io/StateBrews/
+http://192.241.226.80/shiny/StarsStripesAndBeer/*

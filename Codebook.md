@@ -223,3 +223,35 @@ BrewsAndBreweries.scsv contains 1,412 across 10 variables:
 * *ABVlvl* - This variable determines the level of ABV. It is a factor variable of "low", "med low", "med high," or "high".
 
 For access to the data files, R code, and more, visit https://github.com/jeffweltman/StarsStripesAndBeer
+
+For access to an interactive web presentation, visit https://jeffweltman.shinyapps.io/StateBrews/
+
+### Session Info
+
+```r
+library(pander)
+```
+
+```
+## Warning: package 'pander' was built under R version 3.4.2
+```
+
+```r
+pander(sessionInfo())
+```
+
+**R version 3.4.0 (2017-04-21)**
+
+**Platform:** x86_64-w64-mingw32/x64 (64-bit) 
+
+**locale:**
+_LC_COLLATE=English_United States.1252_, _LC_CTYPE=English_United States.1252_, _LC_MONETARY=English_United States.1252_, _LC_NUMERIC=C_ and _LC_TIME=English_United States.1252_
+
+**attached base packages:** 
+_stats_, _graphics_, _grDevices_, _utils_, _datasets_, _methods_ and _base_
+
+**other attached packages:** 
+pander(v.0.6.1)
+
+**loaded via a namespace (and not attached):** 
+_Rcpp(v.0.12.12)_, _digest(v.0.6.12)_, _rprojroot(v.1.2)_, _R.methodsS3(v.1.7.1)_, _plyr(v.1.8.4)_, _R6(v.2.2.2)_, _backports(v.1.1.0)_, _magrittr(v.1.5)_, _evaluate(v.0.10.1)_, _httr(v.1.2.1)_, _repmis(v.0.5)_, _stringi(v.1.1.5)_, _curl(v.2.8.1)_, _data.table(v.1.10.4)_, _R.utils(v.2.5.0)_, _R.oo(v.1.21.0)_, _rmarkdown(v.1.6)_, _tools(v.3.4.0)_, _stringr(v.1.2.0)_, _R.cache(v.0.12.0)_, _yaml(v.2.1.14)_, _compiler(v.3.4.0)_, _htmltools(v.0.3.6)_ and _knitr(v.1.17)_
