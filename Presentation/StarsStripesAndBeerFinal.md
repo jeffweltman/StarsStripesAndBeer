@@ -490,7 +490,7 @@ This bar plot shows median ABV data per state:
 ggplot(ABV_ByState,aes(State,ABV))+
   geom_col(fill="#45415E")+
   coord_cartesian(ylim=c(0.03,0.075))+
-  ggtitle("Median ABV Per State")+
+  ggtitle("Median Alcohol Content Per State")+
   coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
@@ -502,7 +502,7 @@ This bar plot shows median IBU data per state (South Dakota == 0):
 ggplot(IBU_ByState,aes(State,IBU))+
   geom_col(fill="#91B3BC")+
   coord_cartesian(ylim=c(0,63))+
-  ggtitle("Median IBU Per State")+
+  ggtitle("Median Bitterness Per State")+
   coord_flip() # sets value on y axis, States on x. Commenting out the + above and this line will reverse
 ```
 
