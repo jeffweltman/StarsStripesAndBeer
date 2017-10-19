@@ -124,7 +124,7 @@ ggplot(BeerFacts.long, aes(x=State,y=value,fill=factor(variable)))+
 ggplot(ABV_ByState, aes(State,ABV))+   # This bar plot shows median ABV data per state
   geom_col(fill="#45415E")+
   coord_cartesian(ylim=c(0.03,0.075))+
-  ggtitle("Median ABV Per State")+
+  ggtitle("Median Alcohol Content Per State")+
   coord_flip()                         # sets value on y axis, states on x. 
                                        # Commenting out the + above and this 
                                        # line will reverse
@@ -132,7 +132,7 @@ ggplot(ABV_ByState, aes(State,ABV))+   # This bar plot shows median ABV data per
 ggplot(IBU_ByState, aes(State,IBU))+   # This bar plot shows median IBU data per state
   geom_col(fill="#91B3BC")+            # (South Dakota == 0)
   coord_cartesian(ylim=c(0,63))+
-  ggtitle("Median IBU Per State")+
+  ggtitle("Median Bitterness Per State")+
   coord_flip()                         # sets value on y axis, states on x. 
                                        # Commenting out the + above and this
                                        # line will reverse
