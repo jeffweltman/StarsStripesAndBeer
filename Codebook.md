@@ -12,7 +12,7 @@ W&W Analytics has been commissioned by *Stars, Stripes, and Beer Co.* - hereafte
 * Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
 * Is there any apparent relationship between the bitterness of the beer and its alcoholic content?
 
-##Study design and data processing
+## Study design and data processing
 The study was designed to be a representative sample of craft breweries, both large and small, across all 50 states of the United States of America. The data were consolidated from disparate sources in to these two data files.
 
 ### Observational Study
@@ -20,12 +20,12 @@ As this is an observational study, we note that any conclusions drawn from the d
 
 This research is therefore not intended to support such conclusions as, for example, a higher ABV *causes* a higher IBU. Instead the findings might indicate that evidence suggests *an association* between ABV and IBU.
 
-###Collection of the raw data
+### Collection of the raw data
 *SS&B* provided two raw data files: **Beers.csv** and **Breweries.csv**. 
 
 These data were collected from the public domain across a variety of sources, including *ratebeer.com*, the craft breweries' websites, and social media. There are many incomplete records, due largely to the dependency on self-reported information; the tidying of the data will be addressed below.
 
-##Creating the tidy datafile
+## Creating the tidy datafile
 1. The raw data sets are read in:
 
 ```r
@@ -188,7 +188,7 @@ write.csv(TidyBreweries,"TidyBreweries.csv",row.names=FALSE)
 write.csv(BrewsAndBreweries,"BrewsAndBreweries.csv",row.names=FALSE) 
 ```
 
-##Description of the variables in the TidyBeers.csv file
+## Description of the variables in the TidyBeers.csv file
 TidyBeers.csv contains 1,412 observations across 7 variables:
 
 * *BreweryName* - The Foreign Key (FK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
@@ -199,7 +199,7 @@ TidyBeers.csv contains 1,412 observations across 7 variables:
 * *Style* - This is a form of classification of beers. 17 of the 90 beers are classified in two different styles, e.g. "Milk / Sweet Stout", and many styles are variations upon one another, e.g. "Belgian Dark Ale" and "Belgian Strong Dark Ale." As mentioned above, there are 1,412 total beers in our tidy data set, categorized in to 90 styles. Two beers - OktoberFiesta and Kilt Lifter Scottish-Style Ale had no Style provided and were re-coded as "N/A". This is a string (character) variable.
 * *Ounces* - This measures the quantity, in fluid ounces, of each beer in the dataset. It ranges from 8.4 ounces to 32 ounces and is a numeric variable.
 
-##Description of the variables in the TidyBreweries.csv file
+## Description of the variables in the TidyBreweries.csv file
 TidyBreweries.csv contains 1,412 observations across 4 variables:
 
 * *Brewery_ID* - The Primary Key (PK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
@@ -207,7 +207,7 @@ TidyBreweries.csv contains 1,412 observations across 4 variables:
 * *City* - This variable contains the name of the city in which the brewery is located. Of the 1,412 rows in this dataset, there are 282 distinctly-named cities. This is a string (character class) variable.
 * *State* - This variable contains the abbreviated name of the state in which the brewery is located, e.g. "OR" for Oregon. This variable has 51 values, as the District of Columbia is included. This is a string (character class) variable.
 
-##Description of BrewsAndBreweries.csv, our merged datafile
+## Description of BrewsAndBreweries.csv, our merged datafile
 BrewsAndBreweries.scsv contains 1,412 across 10 variables:
 
 * *Brewery_ID* - The Primary Key (PK) for linking the beers to their breweries. This is an integer which ranges from 1 to 547.
@@ -227,14 +227,6 @@ For access to the data files, R code, and more, visit https://github.com/jeffwel
 For access to an interactive web presentation, visit https://jeffweltman.shinyapps.io/StateBrews/
 
 ### Session Info
-
-```r
-library(pander)
-```
-
-```
-## Warning: package 'pander' was built under R version 3.4.2
-```
 
 ```r
 pander(sessionInfo())
